@@ -94,10 +94,10 @@ public class Drive extends SubsystemBase {
     m_rightLeadMotor.setInverted(DriveConstants.kRightLeadMotorInverted);
     m_rightFollowMotor.setInverted(DriveConstants.kRightFollowMotorInverted);
 
-    m_leftLeadMotor.setSmartCurrentLimit(30);
-    m_leftFollowMotor.setSmartCurrentLimit(30);
-    m_rightLeadMotor.setSmartCurrentLimit(30);
-    m_rightFollowMotor.setSmartCurrentLimit(30);
+    m_leftLeadMotor.setSmartCurrentLimit(40);
+    m_leftFollowMotor.setSmartCurrentLimit(40);
+    m_rightLeadMotor.setSmartCurrentLimit(40);
+    m_rightFollowMotor.setSmartCurrentLimit(40);
 
     m_leftLeadMotor.setIdleMode(IdleMode.kBrake);
     m_leftFollowMotor.setIdleMode(IdleMode.kBrake);
@@ -111,6 +111,7 @@ public class Drive extends SubsystemBase {
     m_drive.setMaxOutput(DriveConstants.kNormalMaxSpeedPercentage);
     SmartDashboard.putData(m_leftEncoder);
     SmartDashboard.putData(m_rightEncoder);
+    SmartDashboard.putData(m_gyro);
 
     m_odometry = new DifferentialDriveOdometry(
         Rotation2d.fromDegrees(m_gyro.getAngle()), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());

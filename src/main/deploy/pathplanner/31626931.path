@@ -78,8 +78,33 @@
         "y": 2.0
       },
       "prevControl": {
-        "x": 6.130887339983663,
-        "y": 1.9999999999999998
+        "x": 6.13088733998366,
+        "y": 2.0
+      },
+      "nextControl": {
+        "x": 4.1772041213685505,
+        "y": 2.0
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 5.0,
+        "y": 4.0
+      },
+      "prevControl": {
+        "x": 4.203353437762776,
+        "y": 4.0
       },
       "nextControl": null,
       "holonomicAngle": 0,
@@ -95,8 +120,16 @@
       }
     }
   ],
-  "maxVelocity": null,
-  "maxAcceleration": 2.2,
+  "maxVelocity": 9999999.0,
+  "maxAcceleration": 999.0,
   "isReversed": false,
-  "markers": []
+  "markers": [
+    {
+      "position": 2.5,
+      "names": [
+        "otuzbir",
+        "uyumlarisakami"
+      ]
+    }
+  ]
 }
