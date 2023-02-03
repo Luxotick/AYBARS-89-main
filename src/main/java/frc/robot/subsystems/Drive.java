@@ -32,17 +32,16 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Drive extends SubsystemBase {
   // Drivetrain motors
-  private final CANSparkMax m_leftLeadMotor = new CANSparkMax(CANIDConstants.drivebaseLeftLeadMotorID,
-      MotorType.kBrushed);
-  private final CANSparkMax m_leftFollowMotor = new CANSparkMax(CANIDConstants.drivebaseLeftFollowMotorID,
-      MotorType.kBrushed);
-  private final CANSparkMax m_rightLeadMotor = new CANSparkMax(CANIDConstants.drivebaseRightLeadMotorID,
-      MotorType.kBrushed);
-  private final CANSparkMax m_rightFollowMotor = new CANSparkMax(CANIDConstants.drivebaseRightFollowMotorID,
-      MotorType.kBrushed);
-
+  public final static CANSparkMax m_leftLeadMotor = new CANSparkMax(CANIDConstants.drivebaseLeftLeadMotorID,
+  MotorType.kBrushed);
+  public final static CANSparkMax m_leftFollowMotor = new CANSparkMax(CANIDConstants.drivebaseLeftFollowMotorID,
+  MotorType.kBrushed);
+  public final static CANSparkMax m_rightLeadMotor = new CANSparkMax(CANIDConstants.drivebaseRightLeadMotorID,
+  MotorType.kBrushed);
+  public final static CANSparkMax m_rightFollowMotor = new CANSparkMax(CANIDConstants.drivebaseRightFollowMotorID,
+  MotorType.kBrushed);
   // The robot's drive
-  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftLeadMotor, m_rightLeadMotor);
+  public final static DifferentialDrive m_drive = new DifferentialDrive(m_leftLeadMotor, m_rightLeadMotor);
 
   // The left-side drive encoder
   private final Encoder m_leftEncoder = new Encoder(
@@ -111,7 +110,8 @@ public class Drive extends SubsystemBase {
     m_drive.setMaxOutput(DriveConstants.kNormalMaxSpeedPercentage);
     SmartDashboard.putData(m_leftEncoder);
     SmartDashboard.putData(m_rightEncoder);
-    SmartDashboard.putData(m_gyro);
+    SmartDashboard.putData("sex", m_gyro);
+
 
     m_odometry = new DifferentialDriveOdometry(
         Rotation2d.fromDegrees(m_gyro.getAngle()), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
@@ -122,6 +122,7 @@ public class Drive extends SubsystemBase {
     // Update odometry
     m_odometry.update(
         Rotation2d.fromDegrees(m_gyro.getAngle()), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
+    SmartDashboard.putNumber("Gyro 1", m_gyro.getXComplementaryAngle());
   }
 
   /**

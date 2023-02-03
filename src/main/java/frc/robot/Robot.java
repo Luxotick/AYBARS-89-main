@@ -4,9 +4,20 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.CANIDConstants;
+import frc.robot.subsystems.Drive;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -18,7 +29,12 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+
   private Command m_autonomousCommand;
+
+  private Encoder encoder = new Encoder(0, 1, true, EncodingType.k4X);
+  private final double kDriveTick2Feet = 1.0 /128 * 6 * Math.PI / 12;
+  private Joystick joy1 = new Joystick(0);
 
   private final AybarsBot m_robot = new AybarsBot();
 
@@ -55,6 +71,7 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    SmartDashboard.putNumber("Encoder value", encoder.get() * kDriveTick2Feet );
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -68,16 +85,23 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robot.getAutonomousCommand();
+    //m_autonomousCommand = m_robot.getAutonomousCommand();
 
-    if (m_autonomousCommand != null) {
+    /*if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    */
   }
+
+  final double kP = 1.0;
+
+  double setpoint = 0;
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
+    
+
   }
 
   @Override
@@ -89,11 +113,32 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    encoder.reset();
+
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+
+    //get joystick command
+
+
+    double sensorPosition = encoder.get() * kDriveTick2Feet;
+
+    double error = setpoint - sensorPosition;
+
+    double outputSpeed = kP * error;
+
+    Drive.m_leftLeadMotor.set(outputSpeed);
+    Drive.m_leftFollowMotor.set(outputSpeed);
+    Drive.m_rightLeadMotor.set(-outputSpeed);
+    Drive.m_rightFollowMotor.set(-outputSpeed);
+
+  }
+
+  private void onFalse(double d) {
   }
 
   @Override
